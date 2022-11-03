@@ -9,11 +9,20 @@ class MyDialog {
     required this.context,
   });
 
-  void normalDialog({required String title, required String message}) {
+  void normalDialog({
+    required String title,
+    required String message,
+    Widget? textButton1,
+    Widget? textButton2,
+  }) {
     Get.dialog(
       AlertDialog(
         title: WidgetText(text: title),
         content: WidgetText(text: message),
+        actions: [
+          textButton1 ?? const SizedBox(),
+          textButton2 ?? const SizedBox(),
+        ],
       ),
     );
   }

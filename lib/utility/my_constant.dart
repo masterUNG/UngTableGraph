@@ -12,9 +12,10 @@ class MyConstant {
         fontWeight: FontWeight.w700,
       );
 
-       TextStyle h3Style() => const TextStyle(
+       TextStyle h3Style({Color? color}) => TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.normal,
+        color: color,
       );
 
 

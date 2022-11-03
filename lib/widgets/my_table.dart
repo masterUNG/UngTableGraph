@@ -6,7 +6,9 @@ import 'package:ungtablegraph/utility/my_dialog.dart';
 import 'package:ungtablegraph/utility/my_service.dart';
 import 'package:ungtablegraph/widgets/widget_button.dart';
 import 'package:ungtablegraph/widgets/widget_form.dart';
+import 'package:ungtablegraph/widgets/widget_icon_button.dart';
 import 'package:ungtablegraph/widgets/widget_text.dart';
+import 'package:ungtablegraph/widgets/widget_text_button.dart';
 
 class MyTable extends StatefulWidget {
   const MyTable({super.key});
@@ -41,7 +43,8 @@ class _MyTableState extends State<MyTable> {
                   height: boxConstraints.maxHeight,
                   child: Stack(
                     children: [
-                      SizedBox(height: boxConstraints.maxHeight-80,
+                      SizedBox(
+                        height: boxConstraints.maxHeight - 80,
                         child: ListView(
                           children: [
                             head(),
@@ -84,9 +87,50 @@ class _MyTableState extends State<MyTable> {
                 ),
               ),
               Expanded(
-                flex: 3,
+                flex: 1,
                 child: WidgetText(text: controller.numberModels[index].number),
               ),
+              Expanded(
+                flex: 1,
+                child: WidgetTextButton(
+                  label: 'Edit',
+                  pressFunc: () {},
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: WidgetIconButton(
+                  iconData: Icons.delete_forever,
+                  pressFunc: () {
+                    print(
+                        'delete at id --> ${controller.numberModels[index].id}');
+
+                    MyDialog(context: context).normalDialog(
+                      title: 'Confirm Delete',
+                      message:
+                          'Delete at id = ${controller.numberModels[index].id} \nnumber = ${controller.numberModels[index].number}',
+                      textButton1: WidgetTextButton(
+                        label: 'Delete',
+                        pressFunc: () async {
+                          await MyService()
+                              .deleteNumber(
+                                  id: controller.numberModels[index].id)
+                              .then((value) {
+                            controller.readAllNumber();
+                            Get.back();
+                          });
+                        },
+                      ),
+                      textButton2: WidgetTextButton(
+                        label: 'Cancel',
+                        pressFunc: () {
+                          Get.back();
+                        },
+                      ),
+                    );
+                  },
+                ),
+              )
             ],
           ),
           const Divider(color: Colors.black),
