@@ -94,7 +94,50 @@ class _MyTableState extends State<MyTable> {
                 flex: 1,
                 child: WidgetTextButton(
                   label: 'Edit',
-                  pressFunc: () {},
+                  pressFunc: () {
+                    String? number;
+
+                    TextEditingController textEditingController =
+                        TextEditingController();
+                    textEditingController.text =
+                        controller.numberModels[index].number;
+                    MyDialog(context: context).normalDialog(
+                      title:
+                          'Edit Number at id = ${controller.numberModels[index].id}',
+                      contentWiget: WidgetForm(
+                        textEditingController: textEditingController,
+                        hint: 'Number',
+                        changeFunc: (p0) {
+                          number = p0.trim();
+                        },
+                      ),
+                      textButton1: WidgetTextButton(
+                        label: 'Edit',
+                        pressFunc: () async {
+                          if (number?.isEmpty ?? true) {
+                            Get.back();
+                          } else {
+                            print('number edit ===> $number');
+                            await MyService()
+                                .editNumber(
+                                    id: controller.numberModels[index].id,
+                                    number:
+                                        number ?? textEditingController.text)
+                                .then((value) {
+                              controller.readAllNumber();
+                              Get.back();
+                            });
+                          }
+                        },
+                      ),
+                      textButton2: WidgetTextButton(
+                        label: 'Cancel',
+                        pressFunc: () {
+                          Get.back();
+                        },
+                      ),
+                    );
+                  },
                 ),
               ),
               Expanded(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ungtablegraph/controllers/app_controller.dart';
+import 'package:ungtablegraph/states/about_me.dart';
 import 'package:ungtablegraph/widgets/graph.dart';
 import 'package:ungtablegraph/widgets/my_table.dart';
+import 'package:ungtablegraph/widgets/widget_icon_button.dart';
 
 class MainHome extends StatefulWidget {
   const MainHome({super.key});
@@ -52,6 +54,15 @@ class _MainHomeState extends State<MainHome> {
           return Scaffold(
             appBar: AppBar(
               title: Text(titles[controller.indexBodys.value]),
+              actions: [
+                WidgetIconButton(
+                  iconData: Icons.face,
+                  pressFunc: () {
+                    // Get.to(const AboutMe()); // Can Back
+                    Get.off(const AboutMe()); // Cannot Back
+                  },
+                )
+              ],
             ),
             bottomNavigationBar: BottomNavigationBar(
               items: bottonNavigationBarItems,

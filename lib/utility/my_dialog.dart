@@ -11,14 +11,15 @@ class MyDialog {
 
   void normalDialog({
     required String title,
-    required String message,
+    String? message,
     Widget? textButton1,
     Widget? textButton2,
+    Widget? contentWiget,
   }) {
     Get.dialog(
       AlertDialog(
         title: WidgetText(text: title),
-        content: WidgetText(text: message),
+        content: contentWiget ?? WidgetText(text: message ?? ''),
         actions: [
           textButton1 ?? const SizedBox(),
           textButton2 ?? const SizedBox(),
